@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - DermScan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='doctor.css') }}?v=1.0">
+</head>
+<body>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages" style="padding: 10px; text-align: center; position: fixed; top: 10px; width: 100%; z-index: 1000;">
+            {% for category, message in messages %}
+                {% if category == 'danger' %}
+                    <div class="alert alert-danger" style="background-color: #ffdddd; color: #ff0000; display: inline-block; padding: 10px 20px; border-radius: 5px; box-shadow: 0px 2px 5px rgba(0,0,0,0.2);">
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-success" style="background-color: #ddffdd; color: #00aa00; display: inline-block; padding: 10px 20px; border-radius: 5px; box-shadow: 0px 2px 5px rgba(0,0,0,0.2);">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+{% if session.get('is_doctor') %}
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.avif') }}" alt="Logo">
+            <span class="brand-text">DermScan</span>
+        </div>
+
+        <div class="nav-links" id="navLinks">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('patient') }}">Patient</a>
+            <a href="{{ url_for('doctor_dashboard') }}" class="active">Doctor</a>
+            <a href="{{ url_for('chatbot_page') }}">AI Chatbot</a>
+            <a href="{{ url_for('suggestions') }}">Suggestions</a>
+            <a href="{{ url_for('settings') }}">Settings</a>
+            <a href="{{ url_for('faqs') }}">FAQs</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+
+        <div class="nav-actions">
+            <span style="color: white; font-size: 13px; margin-right: 15px;">
+                {{ session.get('doctor_email') }}
+            </span>
+            <img src="{{ url_for('static', filename='uploads/' + session.get('profile_pic', 'default_doc.png')) }}" 
+                 alt="Profile" 
+                 style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid white;">
+                 
+            <button id="toggleMode">🌙</button>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <section class="profile-section">
+        <div class="profile-card">
+            <h2>Welcome, {{ session.get('doctor_name') }} 👨‍⚕️</h2>
+            <p>Authenticated Medical Session | DermScan Provider Network</p>
+            <span class="status available">System Connected &amp; Verified</span>
+        </div>
+    </section>
+
+    <section class="patients-section">
+        <h2 class="section-title">Incoming Consultation Queue</h2>
+        <div class="patient-grid">
+            <div class="patient-card">
+                <div class="card-info">
+                    <h3 class="patient-title">Active Case Request</h3>
+                    <p>Gender: -- | Age: -- | Status: <span class="status-tag pending">Awaiting Review</span></p>
+                </div>
+                <button class="btn-view">Load Case Parameters</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="analysis-grid">
+        <div class="case-details">
+            <h2>Case Diagnostic Parameters</h2>
+            <div class="case-box">
+                <div class="symptoms">
+                    <p><strong>Reported Epidermal Symptoms:</strong></p>
+                    <p style="color: var(--text-muted); font-style: italic; margin-top: 10px;">
+                        Select an active file from the consultation queue above to sync telemetry parameters.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="ai-prediction">
+            <h2>DermScan AI Analytics Matrix</h2>
+            <div class="ai-card">
+                <p><strong>Top Predicted Condition:</strong> -- </p>
+                <p><strong>Model Confidence Score:</strong> -- </p>
+                <p><strong>Risk Stratification:</strong> <span class="mild" style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px;">Awaiting Data</span></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="form-section">
+        <div class="form-container">
+            <h2>Clinical Evaluation &amp; Action Form</h2>
+            
+            <div class="input-group">
+                <label style="font-weight: 600; color: var(--dark-teal);">Confirmed Diagnosis (Clinical Override)</label>
+                <input type="text" id="diagInput" placeholder="Type verified medical condition...">
+                
+                <label style="font-weight: 600; color: var(--dark-teal); margin-top: 10px; display: block;">Clinical Notes &amp; Observations</label>
+                <textarea id="notesInput" placeholder="Enter professional case assessment or visual layer analysis notes..."></textarea>
+            </div>
+
+            <div class="prescription-box" style="margin-top: 20px; border-top: 2px dashed #ddd; padding-top: 15px;">
+                <h3 style="color: var(--dark-teal); margin-bottom: 10px;">℞ Electronic Prescription (eRx)</h3>
+                <div class="p-grid">
+                    <input type="text" id="medName" placeholder="Medicine Name">
+                    <input type="text" id="medDosage" placeholder="Dosage Formulation">
+                    <input type="text" id="medDuration" placeholder="Duration of Course">
+                </div>
+            </div>
+
+            <div class="action-row" style="margin-top: 20px; display: flex; gap: 15px; align-items: center;">
+                <select class="status-select" style="margin: 0; width: 40%;">
+                    <option>Set Status: Under Review</option>
+                    <option>Set Status: Completed &amp; Signed</option>
+                    <option>Set Status: Deferred</option>
+                </select>
+                <button class="btn-save" style="margin: 0; padding: 12px;">Commit Case &amp; Update Patient Dashboard</button>
+            </div>
+        </div>
+    </section>
+
+{% else %}
+    <div class="lock-screen-container" style="display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4f7f6; font-family: sans-serif;">
+        <div class="lock-card" style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; max-width: 450px; width: 90%;">
+            <div class="icon-lock" style="font-size: 60px; margin-bottom: 20px;">🔒</div>
+            <h2 style="color: #2c3e50; margin-bottom: 10px;">Access Denied</h2>
+            <p style="color: #7f8c8d; font-size: 15px; line-height: 1.5; margin-bottom: 25px;">
+                DermScan Provider Portal security systems indicate that no active or verified clinical session exists. Only registered and Admin-Approved doctors can view this network matrix.
+            </p>
+            <a href="{{ url_for('doctor_login') }}" class="btn-login-redirect" style="display: inline-block; background: #008080; color: white; text-decoration: none; padding: 12px 30px; border-radius: 6px; font-weight: 600; transition: background 0.2s;">
+                Go to Doctor Login Portal
+            </a>
+            <div style="margin-top: 15px;">
+                <a href="{{ url_for('home') }}" style="color: #7f8c8d; font-size: 13px; text-decoration: none;">Return to General Home</a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<script src="{{ url_for('static', filename='doctor.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Signup - DermScan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <style>
+        /* Flash message ko thoda behtar dikhane ke liye simple styling */
+        .alert {
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1 class="login-title">DermScan</h1>
+                <p class="login-subtitle" id="pageSubtitle">Skin Disease Detection</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            <form class="login-form" id="authForm" method="POST" action="{{ url_for('login') }}" enctype="multipart/form-data">
+                
+                <div class="form-group" id="nameGroup" style="display: none;">
+                    <label for="username">Full Name</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="form-group" id="roleGroup" style="display: none;">
+                    <label for="role" style="font-weight: bold;">Register As</label>
+                    <select id="role" name="role" onchange="toggleCnicField()">
+                        <option value="patient">Patient</option>
+                        <option value="doctor">Doctor</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="cnicGroup" style="display: none;">
+                    <label for="doctor_document" style="font-weight: bold;">Upload Professional License / CNIC Pic</label>
+                    <input type="file" id="doctor_document" name="doctor_document" accept="image/*, .pdf">
+                    <small style="color: #666; display: block; margin-top: 5px;">Upload a clear picture of your medical license or CNIC for admin verification.</small>
+                </div>
+
+                <div class="form-remember" id="rememberGroup">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+
+                <button type="submit" class="btn-login" id="submitBtn">Sign In</button>
+            </form>
+
+            <div class="login-footer">
+                <p id="toggleText">Don't have an account? <a href="#" onclick="switchToSignup(event)" id="toggleLink">Sign Up</a></p>
+                <p id="forgotPasswordLink"><a href="#">Forgot Password?</a></p>
+                <p id="adminLink"><a href="{{ url_for('admin') }}" style="color: var(--accent-color);">Admin Portal</a></p>
+            </div>
+        </div>
+
+        <div class="login-side">
+            <div class="login-side-content">
+                <div class="side-logo">
+                    <img src="{{ url_for('static', filename='images/logo.avif') }}" alt="DermScan Logo">
+                </div>
+                <h2 id="sideTitle">Welcome Back</h2>
+                <p id="sideDesc">Sign in to access your skin health analysis and medical records.</p>
+                <ul class="login-features">
+                    <li>✓ Quick Analysis</li>
+                    <li>✓ Secure Records</li>
+                    <li>✓ Doctor Review</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
+</body>
+</html>

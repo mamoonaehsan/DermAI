@@ -1,0 +1,325 @@
+/* ================= ROOT VARIABLES ================= */
+:root {
+    --primary-color: #1abc9c;      /* Modern teal */
+    --secondary-color: #f39c12;    /* Accent orange */
+    --accent-color: #e74c3c;       /* Alerts / hover */
+    --text-dark: #2d3436;
+    --text-light: #ffffff;
+    --card-bg-light: #f5f5f7;       /* Light mode card */
+    --card-bg-dark: #1f1f2f;        /* Dark mode card */
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+    --shadow-lg: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* ================= NAVBAR (Home Page Replica - Compact) ================= */
+.navbar {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    /* Spacing kam ki hai taake items fit ayen */
+    padding: 8px 3% !important; 
+    background-color: #1abc9c !important; 
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    height: 70px !important; /* Fixed height for consistency */
+}
+
+.logo img {
+    height: 45px !important; /* Size thoda chota kiya */
+    border-radius: 50%;
+    background: white;
+    padding: 2px;
+}
+
+.nav-links {
+    display: flex !important;
+    list-style: none !important;
+    gap: 3px !important; /* Gaps fixed for all pages */
+    margin: 0 !important;
+    padding: 0 !important;
+    align-items: center !important;
+}
+
+.nav-links a {
+    text-decoration: none !important;
+    color: white !important;
+    padding: 8px 10px !important; /* Balanced padding */
+    border-radius: 5px !important;
+    font-size: 13px !important; /* Fixed font size for all pages */
+    font-weight: 500 !important;
+    transition: 0.3s ease !important;
+    white-space: nowrap !important;
+}
+
+/* 3. Hover & Active States (Light Blue) */
+.nav-links a:hover, 
+.nav-links a.active {
+    background-color: #add8e6 !important; /* Light Blue */
+    color: #148f77 !important; 
+}
+
+/* 4. Right Side Actions (Theme Toggle) */
+.nav-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+#toggleMode {
+    background: white !important;
+    border: none !important;
+    color: #1abc9c !important;
+    width: 40px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-size: 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Agar screen phir bhi choti paray toh font mazeed chota ho jaye */
+@media (max-width: 1100px) {
+    .nav-links a {
+        padding: 5px 8px !important;
+        font-size: 0.85rem !important;
+    }
+    .nav-links {
+        gap: 2px !important;
+    }
+}
+#toggleMode {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #fff;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+#toggleMode:hover { background: #f0f0f0; }
+
+/* ================= HAMBURGER ================= */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    border-radius: 2px;
+}
+
+/* ================= BODY ================= */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f2f2f5; 
+    color: var(--text-dark);
+    margin: 0;
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+body.dark-mode {
+    background: #1c1c1c; 
+    color: var(--text-light);
+}
+
+/* ================= WELCOME SECTION ================= */
+.welcome-box {
+    padding: 50px 20px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+}
+
+.welcome-box h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.welcome-box p {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-top: 10px;
+}
+
+/* ================= START SCAN BUTTON ================= */
+.btn-primary {
+    display: inline-block;
+    background: #00b894; /* Thoda darker teal for better visibility */
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #00986a; 
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ================= DISEASE CARDS ================= */
+.diseases-section {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.diseases-section h2 {
+    font-size: 1.9rem;
+    margin-bottom: 25px;
+    color: var(--primary-color);
+}
+
+.diseases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.disease-card {
+    background: #d4edda; 
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    color: #2d3436;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, opacity 0.5s ease;
+    opacity: 0; /* JS handles making this 1 */
+    transform: translateY(20px);
+    cursor: pointer;
+    border-top: 5px solid #00b894;
+}
+
+.disease-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.disease-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+}
+
+body.dark-mode .disease-card {
+    background: #1f1f2f;
+    color: #ffffff;
+    border-top-color: #1abc9c;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    background: var(--primary-color);
+    color: var(--text-light);
+    padding: 50px 20px 20px 20px;
+    margin-top: 50px;
+}
+
+.footer-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: auto;
+    gap: 30px;
+}
+
+.footer-section { flex: 1; min-width: 250px; }
+.footer-section ul { list-style: none; padding: 0; }
+.footer-section ul li { margin-bottom: 10px; }
+.footer-section a { color: white; text-decoration: none; }
+
+.footer-social { display: flex; gap: 15px; margin-top: 15px; }
+.footer-social a {
+    width: 35px; height: 35px; background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center; border-radius: 50%;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    margin-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px; right: 0;
+        background: var(--primary-color);
+        width: 100%; flex-direction: column; text-align: center;
+    }
+    .nav-links.show { display: flex; }
+    .diseases-grid { grid-template-columns: 1fr; }
+}
+/* --- Add this at the end of your home.css --- */
+
+.user-profile-widget {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-right: 15px; /* Hamburger se thoda gap */
+    color: white;
+}
+
+.user-info {
+    text-align: right;
+    line-height: 1.2;
+}
+
+.user-name {
+    font-size: 13px;
+    font-weight: 600;
+    display: block;
+}
+
+.user-email {
+    font-size: 10px;
+    opacity: 0.8;
+    display: block;
+}
+
+.profile-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    object-fit: cover; /* Photo stretch nahi hogi */
+    background: #eee;
+}
+
+/* Navbar actions ko thoda balance karne ke liye */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Mobile responsive ke liye */
+@media (max-width: 900px) {
+    .user-info { display: none; } /* Mobile par sirf photo dikhegi taake rush na ho */
+}

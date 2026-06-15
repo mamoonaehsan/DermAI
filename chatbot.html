@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermScan - AI Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='patient.css') }}?v=9.9">
+    <link rel="stylesheet" href="{{ url_for('static', filename='chatbot.css') }}?v=1.0">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo-section">
+            <img src="{{ url_for('static', filename='images/logo.avif') }}" alt="Logo">
+            <span class="brand">DermScan</span>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('patient') }}">Patient</a>
+            <a href="{{ url_for('doctor') }}">Doctor</a>
+            <a href="{{ url_for('chatbot_page') }}" class="active">AI Chatbot</a>
+            <a href="{{ url_for('settings') }}">Settings</a>
+            <a href="{{ url_for('faqs') }}">FAQs</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+       <div class="nav-actions">
+    <span style="color: white; font-size: 13px; margin-right: 10px;">
+        {{ session.get('email', 'user@dermscan.com') }}
+    </span>
+
+    <a href="{{ url_for('settings') }}">
+        <img src="{{ url_for('static', filename='uploads/' + session.get('profile_pic', 'default_doc.png')) }}" 
+             alt="Profile" 
+             style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid white; cursor: pointer;">
+    </a>
+
+    <button id="toggleMode">🌙</button>
+</div>
+    </nav>
+
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">DermScan AI Assistant 🤖</div>
+            <div class="chat-box" id="chatBox">
+                <div class="message bot-msg">Hello! I am your interactive skin wellness assistant. Ask me anything about Acne, Warts, Candidiasis, or daily skin management queries!</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="userInput" class="chat-input" placeholder="Type your skin care query here...">
+                <button id="sendBtn" class="chat-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='chatbot.js') }}"></script>
+</body>
+</html>

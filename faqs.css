@@ -1,0 +1,189 @@
+/* faqs.css - Optimized for 8 Links & Good Readability */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    transition: 0.3s;
+}
+
+/* ================= NAVBAR (Balanced Design) ================= */
+.navbar {
+    background-color: #1abc9c !important;
+    padding: 0 20px !important;
+    height: 70px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 15px !important;
+    position: fixed !important;
+    top: 0 !important;
+    width: 100% !important;
+    z-index: 10000 !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+}
+
+.logo-section {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.logo-section img {
+    height: 40px !important;
+    width: 40px !important;
+    border-radius: 50% !important;
+}
+
+.brand-text {
+    /* Agar aapko dark color chahiye (jo aksar original files mein hota hai) */
+    color: #333 !important; 
+    
+    /* Ya agar aapko wahi teal/greenish color chahiye jo links ka active color hai */
+    /* color: #148f77 !important; */
+
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    margin-left: 5px;
+    white-space: nowrap !important;
+}
+/* 2. Navigation Links (The 8 buttons) */
+.nav-links {
+    display: flex !important;
+    list-style: none !important;
+    gap: 3px !important; /* Gaps fixed for all pages */
+    margin: 0 !important;
+    padding: 0 !important;
+    align-items: center !important;
+    display: flex !important;
+    gap: 10px !important;
+}
+
+.nav-links a {
+    text-decoration: none !important;
+    color: white !important;
+    padding: 8px 10px !important; /* Balanced padding */
+    border-radius: 5px !important;
+    font-size: 13px !important; /* Fixed font size for all pages */
+    font-weight: 500 !important;
+    transition: 0.3s ease !important;
+    white-space: nowrap !important;
+}
+
+/* 3. Hover & Active States (Light Blue) */
+.nav-links a:hover, 
+.nav-links a.active {
+    background-color: #add8e6 !important; /* Light Blue */
+    color: #148f77 !important; 
+}
+
+/* 4. Right Side Actions (Theme Toggle) */
+.nav-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+#themeBtn {
+    background: white !important;
+    border: none !important;
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ================= CONTENT AREA ================= */
+.container {
+    padding-top: 110px !important; /* Content navbar ke niche lane ke liye */
+    padding-bottom: 40px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+}
+
+.header-text {
+    text-align: center !important;
+    margin-bottom: 35px !important;
+}
+
+.header-text h2 {
+    color: #1abc9c !important;
+    font-size: 2.2rem !important;
+    margin-bottom: 10px;
+}
+
+.header-text p {
+    color: #666;
+}
+
+/* FAQS ACCORDION SECTION */
+.faqs-section {
+    width: 100% !important;
+    max-width: 750px !important;
+    padding: 0 20px !important;
+}
+
+.faq-card {
+    margin-bottom: 12px !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.accordion {
+    background-color: #1abc9c !important;
+    color: white !important;
+    cursor: pointer !important;
+    padding: 20px !important;
+    width: 100% !important;
+    border: none !important;
+    text-align: left !important;
+    outline: none !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    transition: 0.4s !important;
+}
+
+.accordion:hover {
+    background-color: #16a085 !important;
+}
+
+/* Purani .panel styling ko is se replace karein */
+.panel {
+    background-color: white !important;
+    display: none; /* Initially chhupa hua */
+    overflow: hidden;
+    color: #444 !important;
+    line-height: 1.6;
+    padding: 0 20px !important;
+}
+
+/* Jab active ho toh display block kar dein */
+.panel.show {
+    display: block !important;
+}
+
+.panel p {
+    padding: 20px 0 !important;
+}
+
+/* DARK MODE */
+body.dark-mode { background-color: #1a1a1a !important; }
+body.dark-mode .header-text p { color: #ccc; }
+body.dark-mode .panel { background-color: #2c3e50 !important; color: #eee !important; }
+
+.nav-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+}

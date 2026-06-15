@@ -1,0 +1,207 @@
+/* ROOT VARIABLES */
+:root {
+    --primary-color: #0066cc;
+    --secondary-color: #00a86b;
+    --accent-color: #ff6b6b;
+    --light-bg: #f8f9fa;
+    --dark-bg: #1a1a2e;
+    --text-dark: #2c3e50;
+    --text-light: #ffffff;
+    --border-color: #e0e0e0;
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+    --shadow-lg: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* BODY */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* LOGIN CONTAINER */
+.login-container {
+    display: flex;
+    width: 90%;
+    max-width: 1000px;
+    background: var(--text-light);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+/* LOGIN BOX */
+.login-box {
+    flex: 1;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.login-title {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.login-subtitle {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-bottom: 40px;
+}
+
+/* ALERTS (Added for JS notifications) */
+.alert {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.alert-error {
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid var(--accent-color);
+}
+
+.alert-success {
+    background: rgba(46, 204, 113, 0.1);
+    border: 1px solid #2ecc71;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+}
+
+.form-remember {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.login-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-footer a:hover {
+    color: var(--secondary-color);
+}
+
+/* SIDE PANEL */
+.login-side {
+    flex: 1;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 30px;
+    color: var(--text-light);
+    animation: slideInRight 0.6s ease-out;
+}
+
+.login-side-content {
+    text-align: center;
+    max-width: 350px;
+}
+
+/* SIDE LOGO */
+.side-logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.side-logo img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255,255,255,0.3);
+}
+
+.login-side h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.login-features {
+    list-style: none;
+    margin-top: 20px;
+    padding-left: 0;
+}
+
+.login-features li {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* ANIMATIONS */
+@keyframes slideInLeft {
+    from {opacity:0; transform: translateX(-30px);}
+    to {opacity:1; transform: translateX(0);}
+}
+
+@keyframes slideInRight {
+    from {opacity:0; transform: translateX(30px);}
+    to {opacity:1; transform: translateX(0);}
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .login-container { flex-direction: column; max-width: 90%; }
+    .login-box, .login-side { width: 100%; padding: 30px; }
+}

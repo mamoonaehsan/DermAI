@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Access | DermScan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <style>
+        .admin-login-box { background: #2c3e50; color: white; padding: 40px; border-radius: 15px; }
+        .admin-login-box h1 { color: #1abc9c; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="admin-login-box">
+            <h1>System Admin</h1>
+            <p>Authorized Personnel Only</p>
+            <form method="POST" action="{{ url_for('admin') }}">
+                <div class="form-group">
+                    <label>Admin ID</label>
+                    <input type="text" name="admin_id" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+                </div>
+                <button type="submit" class="btn-login" style="background: #1abc9c;">Secure Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

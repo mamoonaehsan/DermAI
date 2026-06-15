@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - DermScan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='settings.css') }}">
+</head>
+<body>
+
+<!-- ================= NAVBAR (Updated with 8 links) ================= -->
+<nav class="navbar">
+    <div class="logo-section">
+    <img src="{{ url_for('static', filename='images/logo.avif') }}" alt="">
+    <span class="brand-text">DermScan</span>
+</div>
+
+    <ul class="nav-links">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+    <li><a href="{{ url_for('patient') }}">Patient</a></li>
+    <li><a href="{{ url_for('doctor') }}">Doctor</a></li>
+    <li><a href="{{ url_for('chatbot_page') }}">AI Chatbot</a></li>
+    <li><a href="{{ url_for('suggestions') }}">Suggestions</a></li>
+    <li><a href="{{ url_for('settings') }}" class="active">Settings</a></li> <li><a href="{{ url_for('faqs') }}">FAQs</a></li>
+    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+
+    <div class="nav-right">
+    <span style="color: white; font-size: 13px; margin-right: 15px;">
+        {{ session.get('user_email', 'user@dermscan.com') }}
+    </span>
+
+    <img src="{{ url_for('static', filename='uploads/' + session.get('profile_pic', 'default_doc.png')) }}" 
+         alt="Profile" 
+         style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid white;">
+
+    <button id="themeBtn">🌙</button>
+</div>
+</nav>
+
+<!-- ================= SETTINGS CONTENT ================= -->
+<div class="container">
+    <section class="header-text">
+        <h2>Settings ⚙️</h2>
+        <p>Manage your profile, privacy, notifications, and preferences.</p>
+    </section>
+
+    <section class="settings-section">
+        <!-- PROFILE SETTINGS -->
+        <div class="settings-card">
+    <h3>Profile Settings</h3>
+    <form action="/upload_profile" method="POST" enctype="multipart/form-data">
+        <input type="text" name="full_name" placeholder="Full Name" value="Maliha">
+        <input type="email" name="email" placeholder="Email" value="maliha@example.com">
+        
+        <label style="font-size: 0.8rem; margin-top: 5px;">Profile Picture</label>
+        <input type="file" name="profile_pic" accept="image/*">
+        
+        <button type="submit" class="btn-action" style="margin-top:10px;">Save Changes</button>
+    </form>
+</div>
+
+        <!-- CHANGE PASSWORD -->
+        <div class="settings-card">
+            <h3>Change Password</h3>
+            <input type="password" placeholder="Current Password">
+            <input type="password" placeholder="New Password">
+            <input type="password" placeholder="Confirm New Password">
+            <button class="btn-action">Update Password</button>
+        </div>
+
+        <!-- NOTIFICATIONS & PRIVACY -->
+        <div class="settings-card">
+            <h3>Preferences & Privacy</h3>
+            <label><input type="checkbox" checked> Email Notifications</label>
+            <label><input type="checkbox" checked> Allow AI Analysis of Images</label>
+            <label><input type="checkbox" checked> Share Reports with Doctor</label>
+        </div>
+
+        <!-- ACCOUNT ACTIONS -->
+        <div class="settings-card">
+            <h3>Account Actions</h3>
+            <a href="{{ url_for('logout') }}" class="btn-action logout-btn" style="text-decoration:none; display:inline-block; text-align:center;">Logout Now</a>
+            <button class="btn-action" style="background:#e74c3c !important; margin-top:10px;" disabled>Delete Account</button>
+        </div>
+    </section>
+</div>
+
+<script src="{{ url_for('static', filename='settings.js') }}"></script>
+</body>
+</html>

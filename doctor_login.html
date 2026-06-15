@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Secure Login - DermScan</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { background: white; padding: 40px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        h2 { color: #008080; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; background: #008080; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        button:hover { background: #006666; }
+        .alert { background: #ffdddd; color: red; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <h2>Doctor Portal Login</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('doctor_login') }}" method="POST">
+        <input type="email" name="email" placeholder="Enter Registered Email" required>
+        
+        <input type="text" name="cnic" placeholder="Enter CNIC (e.g., 3310212345673)" required>
+        
+        <button type="submit">Verify CNIC &amp; Enter Dashboard</button>
+    </form>
+    
+    <p style="margin-top:20px;"><a href="{{ url_for('home') }}" style="color: #7f8c8d; font-size: 13px; text-decoration: none;">Back to Home</a></p>
+</div>
+
+</body>
+</html>

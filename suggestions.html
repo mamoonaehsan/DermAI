@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggestions - DermScan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='suggestions.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo-section">
+    <img src="{{ url_for('static', filename='images/logo.avif') }}" alt="">
+    <span class="brand-text">DermScan</span>
+</div>
+
+    <ul class="nav-links">
+       <li><a href="{{ url_for('home') }}" class="active">Home</a></li>
+    <li><a href="{{ url_for('patient') }}">Patient</a></li>
+    <li><a href="{{ url_for('doctor') }}">Doctor</a></li>
+    <li><a href="{{ url_for('chatbot_page') }}">AI Chatbot</a></li>
+    <li><a href="{{ url_for('suggestions') }}">Suggestions</a></li>
+    <li><a href="{{ url_for('settings') }}">Settings</a></li>
+    <li><a href="{{ url_for('faqs') }}">FAQs</a></li>
+    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+
+    <div class="nav-right">
+    <span style="color: white; font-size: 13px; margin-right: 15px; font-family: 'Poppins', sans-serif;">
+        {{ session.get('user_email', 'User') }}
+    </span>
+
+    <img src="{{ url_for('static', filename='uploads/' + session.get('profile_pic', 'default_doc.png')) }}" 
+         alt="Profile" 
+         style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid white; cursor: pointer;">
+
+    <button id="themeBtn" style="margin-left: 10px;">🌙</button>
+</div>
+</nav>
+
+<div class="container">
+    <div class="header-text">
+        <h2>Skin Care Suggestions 🌿</h2>
+        <p>Personalized recommendations for healthy skin</p>
+    </div>
+
+    <div class="suggestions-list">
+        <div class="s-card">
+            <div class="s-icon">💧</div>
+            <div class="s-info">
+                <h3>Stay Hydrated</h3>
+                <p>Drink at least 8 glasses of water daily to maintain skin elasticity.</p>
+            </div>
+        </div>
+
+        <div class="s-card">
+            <div class="s-icon">☀️</div>
+            <div class="s-info">
+                <h3>Sun Protection</h3>
+                <p>Always apply SPF 30+ sunscreen even on cloudy days.</p>
+            </div>
+        </div>
+
+        <div class="s-card">
+            <div class="s-icon">🧴</div>
+            <div class="s-info">
+                <h3>Moisturize Daily</h3>
+                <p>Use a gentle moisturizer after washing to lock in hydration.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='suggestions.js') }}"></script>
+</body>
+</html>

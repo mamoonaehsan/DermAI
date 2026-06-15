@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - DermScan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_dashboard.css') }}">
+    <style>
+        /* Action buttons styling */
+        .btn-approve {
+            background-color: #2ed573;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-approve:hover { background-color: #26af5f; }
+        
+        .btn-reject {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            margin-left: 5px;
+            display: inline-block;
+        }
+        .btn-reject:hover { background-color: #d63745; }
+
+        /* Flash alert styling */
+        .flash-container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .alert {
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        
+        /* Status badge styling */
+        .status-badge {
+            background-color: #e3fcef;
+            color: #155724;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="admin-sidebar">
+        <div class="logo">🛡️ Admin Portal</div>
+        <ul class="admin-menu">
+            <li class="active">📊 Dashboard</li>
+            <li><a href="{{ url_for('logout') }}" style="color: #ff4757; text-decoration: none;">🚪 Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-main-content">
+        <header class="admin-header">
+            <h2>Welcome, Admin Office</h2>
+            <p>Today is: 24 May, 2026</p>
+        </header>
+
+        <!-- Flash Messages Alerts (Success/Error Popup) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- STATS CARDS -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>Total Patients</h3>
+                <p>{{ stats.total_users }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Registered Doctors</h3>
+                <p>{{ stats.total_doctors }}</p>
+            </div>
+            <div class="stat-card urgent">
+                <h3>Pending Verifications</h3>
+                <p>{{ stats.pending_approvals }}</p>
+            </div>
+        </div>
+
+        <!-- ⏳ SECTION 1: PENDING DOCTOR REQUESTS -->
+        <div class="info-table-section" style="margin-bottom: 40px; border-left: 5px solid #ffa500;">
+            <h3 style="color: #d37200;">⏳ Pending Doctor Registration Requests</h3>
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>CNIC / ID</th>
+                        <th>License Number</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- CHANGED: Variable matching with 'pending_docs' from app.py -->
+                    {% if pending_docs %}
+                        {% for req in pending_docs %}
+                        <tr>
+                            <!-- CHANGED: Accessing data as object attributes since backend uses lists of dicts -->
+                            <td>{{ req.name }}</td>
+                            <td>{{ req.email }}</td>
+                            <td>{{ req.cnic }}</td>
+                            <td><span style="background: #e3f2fd; color: #0d47a1; padding: 4px 8px; border-radius: 4px; font-size: 13px;">{{ req.license }}</span></td>
+                            <td>
+                                <a href="{{ url_for('approve_doctor', req_id=req.id) }}" class="btn-approve">✓ Accept</a>
+                                <a href="{{ url_for('reject_doctor', req_id=req.id) }}" class="btn-reject" onclick="return confirm('Are you sure you want to reject this request?')">✗ Reject</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #777; padding: 20px;">No pending registration requests found.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 👥 SECTION 2: REGISTERED USERS DATA -->
+        <div class="info-table-section" style="margin-bottom: 40px;">
+            <h3>Registered Users Data</h3>
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Account Status</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user[0] }}</td>
+                        <td>{{ user[1] }}</td>
+                        <td><span class="status-badge">● Active</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 🩺 SECTION 3: REGISTERED DOCTORS DATA -->
+        <div class="info-table-section">
+            <h3>Registered Doctors Data</h3>
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Security Status</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doc in doctors %}
+                    <tr>
+                        <td>{{ doc[0] }}</td>
+                        <td>{{ doc[1] }}</td>
+                        <td style="letter-spacing: 3px; color: #888; font-weight: bold;">••••••••</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

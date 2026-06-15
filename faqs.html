@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs - DermScan</title>
+    <!-- Flask CSS Link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='faqs.css') }}">
+</head>
+<body>
+
+<!-- ================= NAVBAR (Fixed & Fully Updated) ================= -->
+<nav class="navbar">
+   <div class="logo-section">
+    <img src="{{ url_for('static', filename='images/logo.avif') }}" alt="">
+    <span class="brand-text">DermScan</span>
+</div>
+
+    <!-- Ab yahan pure 8 links hain jo har page par honay chahiye -->
+    <ul class="nav-links">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+    <li><a href="{{ url_for('patient') }}">Patient</a></li>
+    <li><a href="{{ url_for('doctor') }}">Doctor</a></li>
+    <li><a href="{{ url_for('chatbot_page') }}">AI Chatbot</a></li>
+    <li><a href="{{ url_for('suggestions') }}">Suggestions</a></li>
+    <li><a href="{{ url_for('settings') }}">Settings</a></li>
+    <li><a href="{{ url_for('faqs') }}" class="active">FAQs</a></li> <li><a href="{{ url_for('contact') }}">Contact</a></li>
+    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+
+    <div class="nav-right" style="display: flex; align-items: center; gap: 15px;">
+    <span style="color: white; font-size: 13px; font-family: 'Poppins', sans-serif;">
+        {{ session.get('user_email', 'maliha@example.com') }}
+    </span>
+
+    <img src="{{ url_for('static', filename='uploads/' + session.get('profile_pic', 'default_doc.png')) }}" 
+         alt="Profile" 
+         style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid white;">
+
+    <button id="themeBtn">🌙</button>
+</div>
+</nav>
+
+<!-- ================= CONTENT ================= -->
+<div class="container">
+    <section class="header-text">
+        <h2>Frequently Asked Questions ❓</h2>
+        <p>Answers to common questions about DermScan and AI-based skin analysis.</p>
+    </section>
+
+    <section class="faqs-section">
+        <div class="faq-card">
+            <button class="accordion">What is DermScan?</button>
+            <div class="panel">
+                <p>DermScan is an AI-assisted platform to help analyze skin conditions and provide suggestions.</p>
+            </div>
+        </div>
+
+        <div class="faq-card">
+            <button class="accordion">Is AI diagnosis 100% accurate?</button>
+            <div class="panel">
+                <p>No, AI assists doctors but final diagnosis is provided by a qualified dermatologist.</p>
+            </div>
+        </div>
+
+        <div class="faq-card">
+            <button class="accordion">What type of images should I upload?</button>
+            <div class="panel">
+                <p>Clear, focused images of the affected skin area are recommended for better analysis.</p>
+            </div>
+        </div>
+
+        <div class="faq-card">
+            <button class="accordion">Is my data safe?</button>
+            <div class="panel">
+                <p>All data is private. You control whether images or reports are shared with doctors.</p>
+            </div>
+        </div>
+
+        <div class="faq-card">
+            <button class="accordion">Who reviews my reports?</button>
+            <div class="panel">
+                <p>Qualified doctors review reports and provide treatment suggestions based on AI analysis.</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Flask JS Link -->
+<script src="{{ url_for('static', filename='faqs.js') }}"></script>
+</body>
+</html>
